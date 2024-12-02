@@ -24,23 +24,23 @@ Kitsune는 다양한 아키텍처에서 바이너리 분석과 익스플로잇 �
 #### ARM 기반 (예: Mac M1/M2)
 **빌드**
 ```
-docker build -t pwn-amd64 --platform=linux/arm64 -f -build-arg PLATFORM=linux/amd64 .
+docker buildx build -t kitsune64 --platform=linux/arm64 --build-arg PLATFORM=linux/amd64 -f Dockerfile .
 ```
 
 **실행**
 ```
-docker run -it --name pwn-amd64 -v "$(pwd)":/workspace pwn-amd64-container
+docker run -it --name kitsune64 -v "$(pwd)":/workspace kitsune64
 ```
 
 #### Intel 기반
 **빌드**
 ```
-docker build -t pwn-amd64 --build-arg PLATFORM=linux/amd64 .
+docker build -t kitsune64 --build-arg PLATFORM=linux/amd64 Dockerfile .
 ```
 
 **실행**
 ```
-docker run -it --name pwn-amd64 -v "$(pwd)":/workspace pwn-amd64-container
+docker run -it --name kitsune64 -v "$(pwd)":/workspace kitsune64
 ```
 
 
@@ -51,21 +51,21 @@ docker run -it --name pwn-amd64 -v "$(pwd)":/workspace pwn-amd64-container
 #### ARM 기반 (예: Mac M1/M2)
 **빌드**
 ```
-docker build -t pwn-x86 --platform=linux/arm64 -f --build-arg PLATFORM=linux/386 .
+docker build -t kitsune32 --platform=linux/arm64 -f --build-arg PLATFORM=linux/386 -f Dockerfile .
 ```
 
 **실행**
 ```
-docker run -it --name pwn-x86 -v "$(pwd)":/workspace pwn-x86-container
+docker run -it --name kitsune32 -v "$(pwd)":/workspace kitsune32
 ```
 
 #### Intel 기반
 **빌드**
 ```
-docker build -t pwn-x86 --build-arg PLATFORM=linux/386 .
+docker build -t kitsune32 --build-arg PLATFORM=linux/386 Dockerfile .
 ```
 
 **실행**
 ```
-docker run -it --name pwn-x86 -v "$(pwd)":/workspace pwn-x86-container
+docker run -it --name kitsune32 -v "$(pwd)":/workspace kitsune32
 ```
