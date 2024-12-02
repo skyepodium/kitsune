@@ -1,8 +1,8 @@
-# name: ubuntu-pwn-x86_64
-# description: Dockerfile for a pwning environment supporting 64-bit x86_64 (amd64) architecture.
+# description: Unified Dockerfile for 32-bit (i386) and 64-bit (amd64) architectures.
 
-# Base image is set to Ubuntu 20.04 for x86_64 (64-bit) architecture
-FROM --platform=linux/amd64 ubuntu:20.04
+# Base image with platform support (default is linux/amd64)
+ARG PLATFORM=linux/amd64
+FROM --platform=${PLATFORM} ubuntu:20.04
 
 # Update and install required packages
 RUN apt-get update && \
@@ -13,10 +13,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a Python3 virtual environment
-RUN python3 -m venv /opt/venv
+RUN python3 -m venv /python-venv
 
 # Activate the virtual environment and install Python dependencies
-RUN . /opt/venv/bin/activate && \
+RUN . /python-venv/bin/activate && \
     pip install --upgrade pip && \
     pip install pwntools ropgadget
 
