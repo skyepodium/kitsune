@@ -1,10 +1,10 @@
-# description: Unified Dockerfile for 32-bit (i386) and 64-bit (amd64) architectures.
+# 설명: 32비트 (i386)와 64비트 (amd64) 아키텍처를 지원하는 통합 Dockerfile.
 
-# Base image with platform support (default is linux/amd64)
+# 플랫폼 지원 기본 베이스 이미지 (기본값은 linux/amd64)
 ARG PLATFORM=linux/amd64
 FROM --platform=${PLATFORM} ubuntu:20.04
 
-# Update and install required packages
+# 필수 패키지 업데이트 및 설치
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         file git curl gcc g++ make binutils vim python3 python3-pip python3-venv \
@@ -12,20 +12,20 @@ RUN apt-get update && \
         libseccomp-dev qemu-user-static && \
     rm -rf /var/lib/apt/lists/*
 
-# Create a Python3 virtual environment
+# Python3 가상 환경 생성
 RUN python3 -m venv /python-venv
 
-# Activate the virtual environment and install Python dependencies
+# 가상 환경 활성화 및 Python 종속성 설치
 RUN . /python-venv/bin/activate && \
     pip install --upgrade pip && \
     pip install pwntools ropgadget
 
-# Clone the pwndbg repository and set it up
+# pwndbg 리포지토리 복제 및 설정
 RUN git clone https://github.com/pwndbg/pwndbg && \
     cd pwndbg && ./setup.sh
 
-# Add pwndbg to gdb initialization
+# pwndbg를 gdb 초기화 파일에 추가
 RUN echo 'source /pwndbg/gdbinit.py' >> /root/.gdbinit
 
-# Set up the container to use bash by default
+# 기본적으로 bash 셸을 사용하도록 컨테이너 설정
 CMD ["/bin/bash"]
