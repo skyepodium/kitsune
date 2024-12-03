@@ -9,8 +9,13 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         file git curl gcc g++ make binutils vim python3 python3-pip python3-venv \
         libc6 libc6-dev gdb \
-        libseccomp-dev qemu-user-static && \
+        libseccomp-dev && \
     rm -rf /var/lib/apt/lists/*
+
+# PLATFORM이 linux/amd64일 때만 qemu-user-static 설치
+RUN if [ "${PLATFORM}" = "linux/amd64" ]; then \
+        apt-get update && apt-get install -y --no-install-recommends qemu-user-static; \
+    fi
 
 # Python3 가상 환경 생성
 RUN python3 -m venv /python-venv

@@ -24,7 +24,7 @@ Kitsune는 다양한 아키텍처에서 바이너리 분석과 익스플로잇 �
 #### ARM 기반 (예: Mac M1/M2)
 **빌드**
 ```
-docker buildx build -t kitsune64 --platform=linux/arm64 --build-arg PLATFORM=linux/amd64 -f Dockerfile .
+docker build -t kitsune64 --platform=linux/arm64 --build-arg PLATFORM=linux/amd64 -f Dockerfile .
 ```
 
 **실행**
@@ -51,7 +51,7 @@ docker run -it --name kitsune64 -v "$(pwd)":/workspace kitsune64
 #### ARM 기반 (예: Mac M1/M2)
 **빌드**
 ```
-docker build -t kitsune32 --platform=linux/arm64 -f --build-arg PLATFORM=linux/386 -f Dockerfile .
+docker build -t kitsune32 --platform=linux/386 --build-arg PLATFORM=i386 -f Dockerfile .
 ```
 
 **실행**
